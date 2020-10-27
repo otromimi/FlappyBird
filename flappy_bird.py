@@ -9,6 +9,10 @@ pygame.init()
 screen = pygame.display.set_mode((576,1024))
 clock = pygame.time.Clock()
 
+# Game variables
+gravity = 0.25
+bird_movement = 0
+
 bg_surface = pygame.image.load('sprites/background-day.png').convert()
 bg_surface = pygame.transform.scale2x(bg_surface)
 
@@ -28,6 +32,8 @@ while True:
             sys.exit()
 
     screen.blit(bg_surface,(0,0))
+    bird_movement += gravity
+    bird_rect.centery += bird_movement
     screen.blit(bird_surface, bird_rect)
     floor_x_pos -= 1
     draw_floor()
