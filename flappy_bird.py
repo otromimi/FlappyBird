@@ -24,10 +24,10 @@ while True:
             sys.exit()
 
     screen.blit(bg_surface,(0,0))
-    floor_surface -= 1
+    floor_x_pos -= 1
     draw_floor()
-    if floor_x_pos <= -576
-    floor_x_pos = 0
+    if floor_x_pos <= -576:
+        floor_x_pos = 0
 
     pygame.display.update() 
     clock.tick(120)
