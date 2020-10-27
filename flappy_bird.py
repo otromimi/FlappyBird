@@ -1,12 +1,14 @@
 import pygame
 import sys
+import random
 
 def draw_floor():
     screen.blit(floor_surface,(floor_x_pos,900))
     screen.blit(floor_surface,(floor_x_pos + 576,900))
 
 def create_pipe():
-    new_pipe = pipe_surface.get_rect(midtop = (288,512))
+    random_pipe_pos = random.choice(pipe_height)
+    new_pipe = pipe_surface.get_rect(midtop = (700,random_pipe_pos))
     return new_pipe
 
 def move_pipes(pipes):
@@ -42,6 +44,8 @@ pipe_surface = pygame.transform.scale2x(pipe_surface)
 pipe_list = []
 SPAWNPIPE = pygame.USEREVENT
 pygame.time.set_timer(SPAWNPIPE, 1200)
+pipe_height = [400,600,800]
+
 
 while True:
     for event in pygame.event.get():
