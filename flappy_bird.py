@@ -45,7 +45,7 @@ def bird_animation():
     return new_bird, new_bird_rect
 
 def score_display():
-    score_surface = game_font.render("Score", True, (255, 255 ,255))
+    score_surface = game_font.render(str(int(score)), True, (255, 255 ,255))
     score_rect = score_surface.get_rect(center = (288, 100))
     screen.blit(score_surface, score_rect)
 
@@ -128,6 +128,7 @@ while True:
         draw_pipes(pipe_list)
 
         # Score
+        score += 0.01
         score_display()
 
     # Floor
