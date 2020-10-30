@@ -39,6 +39,11 @@ def rotate_bird(bird):
     new_bird = pygame.transform.rotozoom(bird, -bird_movement * 3, 1)
     return new_bird
 
+def bird_animation():
+    new_bird = bird_frames[bird_index]
+    new_bird_rect = new_bird.get_rect(center = (100, bird_rect.centery))
+    return new_bird, new_bird_rect
+
 pygame.init()
 screen = pygame.display.set_mode((576,1024))
 clock = pygame.time.Clock()
@@ -55,9 +60,23 @@ floor_surface = pygame.image.load('sprites/base.png').convert()
 floor_surface = pygame.transform.scale2x(floor_surface)
 floor_x_pos = 0
 
+"""
 bird_surface = pygame.image.load('sprites/bluebird-midflap.png').convert_alpha()
 bird_surface = pygame.transform.scale2x(bird_surface)
 bird_rect = bird_surface.get_rect(center = (100,512))
+"""
+# Loading BLUE bird states
+bird_states = ["bluebird-downflap.png", "bluebird-midflap.png", "bluebird-upflap.png"]
+bird_frames = []
+bird_index = 0
+for state in bird_states:
+    bird_frames.append(pygame.transform.scale2x(pygame.image.load('sprites/'+state).convert_alpha()))
+# giving some initialization value
+bird_surface = bird_frames[bird_index]
+bird_rect = bird_surface.get_rect(center = (100,512))
+
+BIRDFLAP = pygame.USEREVENT + 1
+pygame.time.set_timer(BIRDFLAP, 200)
 
 pipe_surface = pygame.image.load('sprites/pipe-green.png').convert()
 pipe_surface = pygame.transform.scale2x(pipe_surface)
@@ -83,6 +102,9 @@ while True:
                 bird_movement = 0
         if event.type == SPAWNPIPE:
             pipe_list.extend(create_pipe())
+        if event.type == BIRDFLAP:
+            bird_index = (bird_index + 1)% 3
+            bird_surface, bird_rect = bird_animation()
 
     screen.blit(bg_surface,(0,0))
 
